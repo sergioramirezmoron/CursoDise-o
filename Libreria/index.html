@@ -18,6 +18,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
+    
   </head>
   <body>
     <header class="main-header">
@@ -27,13 +28,17 @@
         </div>
 
         <nav class="main-nav">
+          <button class="menu-toggle" id="mobile-menu">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+
           <form action="#" class="search-form">
             <i class="fa-solid fa-magnifying-glass"></i>
             <input type="text" placeholder="Buscar..." name="search" />
           </form>
 
-          <ul class="nav-links">
-            <li><a href="index.html" class="active">Tu Librería</a></li>
+          <ul class="nav-links" id="nav-list">
+            <li><a href="index.html">Tu Librería</a></li>
             <li><a href="tienda.html">Compra On-line</a></li>
             <li><a href="#">Contacto</a></li>
           </ul>
@@ -166,7 +171,7 @@
             <article class="location-map">
               <img src="public/2.png" alt="Mapa" />
             </article>
-            
+
 
             <article class="location-list">
               <h2>Nuestras tiendas</h2>
@@ -212,18 +217,59 @@
     </footer>
 
     <script>
-      const container = document.getElementById("productsContainer");
-      const btnLeft = document.getElementById("scrollLeft");
-      const btnRight = document.getElementById("scrollRight");
+    const container = document.getElementById("productsContainer");
+    const btnLeft = document.getElementById("scrollLeft");
+    const btnRight = document.getElementById("scrollRight");
 
-      if (container && btnLeft && btnRight) {
-        btnRight.addEventListener("click", () => {
-          container.scrollBy({ left: 300, behavior: "smooth" });
-        });
-        btnLeft.addEventListener("click", () => {
-          container.scrollBy({ left: -300, behavior: "smooth" });
-        });
-      }
-    </script>
+    if (container && btnLeft && btnRight) {
+    btnRight.addEventListener("click", () => {
+        container.scrollBy({ left: 300, behavior: "smooth" });
+    });
+    btnLeft.addEventListener("click", () => {
+        container.scrollBy({ left: -300, behavior: "smooth" });
+    });
+    }
+
+    const menuBtn = document.getElementById("mobile-menu");
+    const navList = document.getElementById("nav-list");
+
+    if (menuBtn && navList) {
+    menuBtn.addEventListener("click", () => {
+        navList.classList.toggle("active");
+    });
+    }
+
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    if (container) {
+    container.addEventListener('mousedown', (e) => {
+        isDown = true;
+        container.classList.add('active');
+        startX = e.pageX - container.offsetLeft;
+        scrollLeft = container.scrollLeft;
+    });
+
+    container.addEventListener('mouseleave', () => {
+        isDown = false;
+        container.classList.remove('active');
+    });
+
+    container.addEventListener('mouseup', () => {
+        isDown = false;
+        container.classList.remove('active');
+    });
+
+    container.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        
+        const x = e.pageX - container.offsetLeft;
+        const walk = (x - startX) * 2;
+        container.scrollLeft = scrollLeft - walk;
+    });
+    }
+</script>
   </body>
 </html>

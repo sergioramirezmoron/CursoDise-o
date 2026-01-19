@@ -27,14 +27,18 @@
         </div>
 
         <nav class="main-nav">
+          <button class="menu-toggle" id="mobile-menu">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+
           <form action="#" class="search-form">
             <i class="fa-solid fa-magnifying-glass"></i>
             <input type="text" placeholder="Buscar..." name="search" />
           </form>
 
-          <ul class="nav-links">
+          <ul class="nav-links" id="nav-list">
             <li><a href="index.html">Tu Librería</a></li>
-            <li><a href="tienda.html" class="active">Compra On-line</a></li>
+            <li><a href="tienda.html">Compra On-line</a></li>
             <li><a href="#">Contacto</a></li>
           </ul>
         </nav>
@@ -99,5 +103,16 @@
         </div>
       </div>
     </footer>
+    <script>
+  
+  const menuBtn = document.getElementById("mobile-menu");
+  const navList = document.getElementById("nav-list");
+
+  if (menuBtn && navList) {
+    menuBtn.addEventListener("click", () => {
+      navList.classList.toggle("active");
+    });
+  }
+</script>
   </body>
 </html>
